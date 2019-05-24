@@ -84,13 +84,13 @@ workflows:
   terraform-workflow-dev:
     jobs:
       - tf-plan:
-          context: dev
+          context: dev-crm
           filters:
             branches:
               only:
                 - master
       - tf-approve:
-          context: dev
+          context: dev-crm
           type: approval
           requires:
             - tf-plan
@@ -98,7 +98,7 @@ workflows:
             branches:
               only: master
       - tf-apply:
-          context: dev
+          context: dev-crm
           requires:
             - tf-approve
           filters:
@@ -108,13 +108,13 @@ workflows:
   helm-workflow-dev:
     jobs:
       - helm-dryrun:
-          context: dev
+          context: dev-crm
           filters:
             branches:
               only:
                 - master
       - helm-approve:
-          context: dev
+          context: dev-crm
           type: approval
           requires:
             - helm-dryrun
@@ -122,7 +122,7 @@ workflows:
             branches:
               only: master
       - helm-apply:
-          context: dev
+          context: dev-crm
           requires:
             - helm-approve
           filters:
