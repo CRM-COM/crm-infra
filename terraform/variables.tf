@@ -5,7 +5,7 @@ variable "project" {
 
 variable "gke_node_type" {
   type = "string"
-  default = "n1-standard-2"
+  default = "n1-standard-1"
 }
 
 variable "environment" {
