@@ -1,6 +1,6 @@
 variable "project" {
   type = "string"
-  default = "crm"
+  default = "crm-ecenter"
 }
 
 variable "gke_node_type" {
