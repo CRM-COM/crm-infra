@@ -1,0 +1,130 @@
+version: 2
+jobs:
+  tf-plan:
+    working_directory: /circleci
+    docker:
+      - image: thanandorn/gkh:0.11.10
+    steps:
+      - checkout
+      - run:
+          name: Prepare terraform key
+          command: |
+            mkdir keys
+            echo ${TERRAFORM_ACCOUNT} | base64 -d > keys/terraform-${ENVIRONMENT}.json
+      - run:
+          name: Prepare helm
+          command: |
+            export HELM_HOME=/tmp/helm-tf
+            helm init --client-only
+      - run:
+          name: Terraform Plan
+          command: |
+            cd terraform
+
+            terraform get .
+            terraform init -backend-config=../environments/$ENVIRONMENT/env.tfvars
+            terraform plan -refresh=true -out=out.tfplan
+      - persist_to_workspace:
+          root: .
+          paths:
+          - terraform
+          - keys
+
+  tf-apply:
+    working_directory: /circleci
+    docker:
+      - image: thanandorn/gkh:0.11.10
+    steps:
+      - attach_workspace:
+          at: /circleci
+      - run:
+          name: Terraform Apply
+          command: |
+            echo ${TERRAFORM_ACCOUNT} | base64 -d > keys/terraform-${ENVIRONMENT}.json
+            cd terraform
+            terraform apply out.tfplan
+
+  helm-dryrun:
+    working_directory: /circleci
+    docker:
+      - image: thanandorn/gkh:0.11.10
+    steps:
+      - checkout
+      - run:
+          name: Helm dry run
+          command: |
+            export GOOGLE_APPLICATION_CREDENTIALS=${HOME}/gcp-key.json
+            echo ${SERVICE_ACCOUNT} | base64 -d > ${GOOGLE_APPLICATION_CREDENTIALS}
+            gcloud auth activate-service-account --key-file ${GOOGLE_APPLICATION_CREDENTIALS}
+            gcloud container clusters get-credentials $CLUSTER_NAME --region $GCP_REGION --project $GCP_PROJECT
+
+            cd environments/$ENVIRONMENT
+            helm upgrade --install --dry-run external-secrets ./secrets
+
+  helm-apply:
+    working_directory: /circleci
+    docker:
+      - image: thanandorn/gkh:0.11.10
+    steps:
+      - checkout
+      - run:
+          name: Helm run
+          command: |
+            export GOOGLE_APPLICATION_CREDENTIALS=${HOME}/gcp-key.json
+            echo ${SERVICE_ACCOUNT} | base64 -d > ${GOOGLE_APPLICATION_CREDENTIALS}
+            gcloud auth activate-service-account --key-file ${GOOGLE_APPLICATION_CREDENTIALS}
+            gcloud container clusters get-credentials $CLUSTER_NAME --region $GCP_REGION --project $GCP_PROJECT
+
+            cd environments/$ENVIRONMENT
+            helm upgrade --install external-secrets ./secrets
+
+
+workflows:
+  version: 2
+  terraform-workflow-dev:
+    jobs:
+      - tf-plan:
+          context: dev
+          filters:
+            branches:
+              only:
+                - master
+      - tf-approve:
+          context: dev
+          type: approval
+          requires:
+            - tf-plan
+          filters:
+            branches:
+              only: master
+      - tf-apply:
+          context: dev
+          requires:
+            - tf-approve
+          filters:
+            branches:
+              only: master
+
+  helm-workflow-dev:
+    jobs:
+      - helm-dryrun:
+          context: dev
+          filters:
+            branches:
+              only:
+                - master
+      - helm-approve:
+          context: dev
+          type: approval
+          requires:
+            - helm-dryrun
+          filters:
+            branches:
+              only: master
+      - helm-apply:
+          context: dev
+          requires:
+            - helm-approve
+          filters:
+            branches:
+              only: master
