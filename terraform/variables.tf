@@ -31,7 +31,7 @@ variable "min_nodes" {
 
 variable "max_nodes" {
   type = "string"
-  default = "10"
+  default = "2"
 }
 
 variable "mysql_node_type" {
@@ -44,7 +44,7 @@ variable "region" {
   default = "europe-west2"
 }
 
-variable "domain" {
-  type = "string"
-  default = "augnetmq.com"
-}
+//variable "domain" {
+//  type = "string"
+//  default = "augnetmq.com"
+//}

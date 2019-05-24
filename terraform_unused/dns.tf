@@ -4,7 +4,7 @@ resource "google_dns_managed_zone" "main_zone" {
 }
 
 resource "google_compute_global_address" "api" {
-  name     = "api-static-ip"
+  name     = "gateway-static-ip"
 }
 
 resource "google_compute_global_address" "swagger" {
