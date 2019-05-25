@@ -47,4 +47,4 @@ resource "helm_release" "infra" {
 //  depends_on = [
 //    "kubernetes_cluster_role_binding.tiller-binding"
 //  ]
-}
+//}
