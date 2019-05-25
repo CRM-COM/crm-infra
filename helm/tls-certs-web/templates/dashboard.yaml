@@ -1,8 +1,0 @@
-apiVersion: networking.gke.io/v1beta1
-kind: ManagedCertificate
-metadata:
-  name: dashboard
-spec:
-  domains:
-    - dashboard.{{ .Values.environment }}.{{ .Values.domain }}
-    

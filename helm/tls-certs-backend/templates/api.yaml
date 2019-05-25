@@ -4,5 +4,5 @@ metadata:
   name: api
 spec:
   domains:
-    - api.{{ .Values.environment }}.{{ .Values.domain }}
+    - api.{{ .Values.domain }}
     
