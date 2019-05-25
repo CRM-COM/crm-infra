@@ -42,41 +42,41 @@ jobs:
           command: |
             echo ${TERRAFORM_ACCOUNT} | base64 -d > keys/terraform-${ENVIRONMENT}.json
             cd terraform
-            terraform apply out.tfplan
+            terraform destroy out.tfplan
 
-  helm-dryrun:
-    working_directory: /circleci
-    docker:
-      - image: thanandorn/gkh:0.11.10
-    steps:
-      - checkout
-      - run:
-          name: Helm dry run
-          command: |
-            export GOOGLE_APPLICATION_CREDENTIALS=${HOME}/gcp-key.json
-            echo ${TERRAFORM_ACCOUNT} | base64 -d > ${GOOGLE_APPLICATION_CREDENTIALS}
-            gcloud auth activate-service-account --key-file ${GOOGLE_APPLICATION_CREDENTIALS}
-            gcloud container clusters get-credentials $CLUSTER_NAME --region $GCP_REGION --project $GCP_PROJECT
-
-            cd environments/$ENVIRONMENT
-            helm upgrade --install --dry-run external-secrets ./secrets
-
-  helm-apply:
-    working_directory: /circleci
-    docker:
-      - image: thanandorn/gkh:0.11.10
-    steps:
-      - checkout
-      - run:
-          name: Helm run
-          command: |
-            export GOOGLE_APPLICATION_CREDENTIALS=${HOME}/gcp-key.json
-            echo ${TERRAFORM_ACCOUNT} | base64 -d > ${GOOGLE_APPLICATION_CREDENTIALS}
-            gcloud auth activate-service-account --key-file ${GOOGLE_APPLICATION_CREDENTIALS}
-            gcloud container clusters get-credentials $CLUSTER_NAME --region $GCP_REGION --project $GCP_PROJECT
-
-            cd environments/$ENVIRONMENT
-            helm upgrade --install external-secrets ./secrets
+#  helm-dryrun:
+#    working_directory: /circleci
+#    docker:
+#      - image: thanandorn/gkh:0.11.10
+#    steps:
+#      - checkout
+#      - run:
+#          name: Helm dry run
+#          command: |
+#            export GOOGLE_APPLICATION_CREDENTIALS=${HOME}/gcp-key.json
+#            echo ${TERRAFORM_ACCOUNT} | base64 -d > ${GOOGLE_APPLICATION_CREDENTIALS}
+#            gcloud auth activate-service-account --key-file ${GOOGLE_APPLICATION_CREDENTIALS}
+#            gcloud container clusters get-credentials $CLUSTER_NAME --region $GCP_REGION --project $GCP_PROJECT
+#
+#            cd environments/$ENVIRONMENT
+#            helm upgrade --install --dry-run external-secrets ./secrets
+#
+#  helm-apply:
+#    working_directory: /circleci
+#    docker:
+#      - image: thanandorn/gkh:0.11.10
+#    steps:
+#      - checkout
+#      - run:
+#          name: Helm run
+#          command: |
+#            export GOOGLE_APPLICATION_CREDENTIALS=${HOME}/gcp-key.json
+#            echo ${TERRAFORM_ACCOUNT} | base64 -d > ${GOOGLE_APPLICATION_CREDENTIALS}
+#            gcloud auth activate-service-account --key-file ${GOOGLE_APPLICATION_CREDENTIALS}
+#            gcloud container clusters get-credentials $CLUSTER_NAME --region $GCP_REGION --project $GCP_PROJECT
+#
+#            cd environments/$ENVIRONMENT
+#            helm upgrade --install external-secrets ./secrets
 
 
 workflows:
@@ -105,26 +105,26 @@ workflows:
             branches:
               only: master
 
-  helm-workflow-dev:
-    jobs:
-      - helm-dryrun:
-          context: dev-crm
-          filters:
-            branches:
-              only:
-                - master
-      - helm-approve:
-          context: dev-crm
-          type: approval
-          requires:
-            - helm-dryrun
-          filters:
-            branches:
-              only: master
-      - helm-apply:
-          context: dev-crm
-          requires:
-            - helm-approve
-          filters:
-            branches:
-              only: master
+#  helm-workflow-dev:
+#    jobs:
+#      - helm-dryrun:
+#          context: dev-crm
+#          filters:
+#            branches:
+#              only:
+#                - master
+#      - helm-approve:
+#          context: dev-crm
+#          type: approval
+#          requires:
+#            - helm-dryrun
+#          filters:
+#            branches:
+#              only: master
+#      - helm-apply:
+#          context: dev-crm
+#          requires:
+#            - helm-approve
+#          filters:
+#            branches:
+#              only: master
