@@ -37,14 +37,14 @@ resource "helm_release" "infra" {
   }
 }
 
-resource "helm_release" "sealed-secrets" {
-  chart = "stable/sealed-secrets"
-  name = "sealed-secrets-controller"
-  repository = "${data.helm_repository.stable.name}"
-  version = "1.0.1"
-  namespace = "kube-system"
-
-  depends_on = [
-    "kubernetes_cluster_role_binding.tiller-binding"
-  ]
+//resource "helm_release" "sealed-secrets" {
+//  chart = "stable/sealed-secrets"
+//  name = "sealed-secrets-controller"
+//  repository = "${data.helm_repository.stable.name}"
+//  version = "1.0.1"
+//  namespace = "kube-system"
+//
+//  depends_on = [
+//    "kubernetes_cluster_role_binding.tiller-binding"
+//  ]
 }
