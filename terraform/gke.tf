@@ -63,7 +63,6 @@ resource "google_container_cluster" "main" {
 
 resource "google_container_node_pool" "main_pool" {
   cluster = "${google_container_cluster.main.name}"
-  region = "${var.region}"
   zone   = "${var.zone}"
 
   node_count = 2
