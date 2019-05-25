@@ -66,8 +66,6 @@ resource "google_container_node_pool" "main_pool" {
   region = "${var.region}"
   zone   = "${var.zone}"
 
-  initial_node_count = 1
-
   node_count = 2
 //  autoscaling {
 //    max_node_count = "${var.max_nodes}"
