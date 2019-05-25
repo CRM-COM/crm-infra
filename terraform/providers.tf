@@ -25,12 +25,12 @@ provider "google" {
   version     = "~> 2.0.0"
 }
 
-//provider "mysql" {
-//  version = "~> 1.5"
-//  endpoint = "${google_sql_database_instance.main_sql.first_ip_address}:3306"
-//  username = "mysqladmin"
-//  password = "${random_string.mysql_admin_password.result}"
-//}
+provider "mysql" {
+  version = "~> 1.5"
+  endpoint = "${google_sql_database_instance.main_sql.first_ip_address}:3306"
+  username = "mysqladmin"
+  password = "${random_string.mysql_admin_password.result}"
+}
 
 provider "kubernetes" {
   version =  "~> 1.5"
