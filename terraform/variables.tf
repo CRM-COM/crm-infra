@@ -47,7 +47,8 @@ variable "region" {
 variable "zone" {
   default = "europe-west2-b"
 }
-//variable "domain" {
-//  type = "string"
-//  default = "augnetmq.com"
-//}
+
+variable "domain" {
+  type = "string"
+  default = "crmcloudapi.com"
+}
