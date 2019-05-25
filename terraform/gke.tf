@@ -1,6 +1,6 @@
 resource "google_container_cluster" "main" {
   name = "${var.project}-cluster"
-  region = "${var.region}"
+  zone   = "${var.zone}"
   network    = "${google_compute_network.default.name}"
   subnetwork = "${google_compute_subnetwork.default.name}"
   initial_node_count = 1
@@ -64,6 +64,7 @@ resource "google_container_cluster" "main" {
 resource "google_container_node_pool" "main_pool" {
   cluster = "${google_container_cluster.main.name}"
   region = "${var.region}"
+  zone   = "${var.zone}"
 
   initial_node_count = 1
 

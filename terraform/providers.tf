@@ -21,6 +21,7 @@ provider "google" {
   credentials = "../keys/terraform-${var.environment}.json"
   project     = "${var.project}"
   region      = "${var.region}"
+  zone        = "${var.zone}"
   version     = "~> 2.0.0"
 }
 
