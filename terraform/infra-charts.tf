@@ -9,7 +9,7 @@ data "helm_repository" "incubator" {
 
 resource "helm_release" "certificates-backend" {
   name = "certificates-backend"
-  chart = "./../helm/tls-certs-backend"
+  chart = "../helm/tls-certs-backend"
   namespace = "backend"
 
   set {
@@ -24,7 +24,7 @@ resource "helm_release" "certificates-backend" {
 
 resource "helm_release" "infra" {
   name = "infra"
-  chart = "./../helm/infra"
+  chart = "../helm/infra"
   namespace = "infra"
 
   set {

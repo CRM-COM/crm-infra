@@ -29,6 +29,7 @@ jobs:
           paths:
           - terraform
           - keys
+          - helm
 
   tf-apply:
     working_directory: /circleci
