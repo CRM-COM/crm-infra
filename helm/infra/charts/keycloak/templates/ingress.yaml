@@ -1,0 +1,23 @@
+{{- $ingress := .Values.keycloak.ingress -}}
+{{- if $ingress.enabled -}}
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{ template "keycloak.fullname" . }}
+  labels:
+    app: {{ template "keycloak.name" . }}
+    chart: {{ template "keycloak.chart" . }}
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+  annotations:
+    kubernetes.io/ingress.class: gce
+    kubernetes.io/ingress.global-static-ip-name: keycloak-static-ip
+    networking.gke.io/managed-certificates: keycloak
+  {{- with $ingress.labels }}
+{{ toYaml . | indent 4 }}
+{{- end }}
+spec:
+  backend:
+    serviceName: {{ template "keycloak.fullname" $ }}-http
+    servicePort: http
+{{- end -}}
