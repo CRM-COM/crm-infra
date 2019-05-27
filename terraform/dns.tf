@@ -7,6 +7,10 @@ resource "google_compute_global_address" "api" {
   name     = "gateway-static-ip"
 }
 
+resource "google_compute_global_address" "keycloak" {
+  name     = "keycloak-static-ip"
+}
+
 resource "google_compute_global_address" "swagger" {
   name     = "swagger-static-ip"
 }
@@ -17,6 +21,14 @@ resource "google_dns_record_set" "api" {
   ttl          = 300
   managed_zone = "${google_dns_managed_zone.main_zone.name}"
   rrdatas      = ["${google_compute_global_address.api.address}"]
+}
+
+resource "google_dns_record_set" "keycloak" {
+  name         = "api.${google_dns_managed_zone.main_zone.dns_name}"
+  type         = "A"
+  ttl          = 300
+  managed_zone = "${google_dns_managed_zone.main_zone.name}"
+  rrdatas      = ["${google_compute_global_address.keycloak.address}"]
 
 }
 
@@ -58,4 +70,12 @@ output "api_ip_name" {
 
 output "api_ip_address" {
   value = "${google_compute_global_address.api.address}"
+}
+
+output "keycloak_ip_name" {
+  value = "${google_compute_global_address.keycloak.name}"
+}
+
+output "keycloak_ip_address" {
+  value = "${google_compute_global_address.keycloak.address}"
 }

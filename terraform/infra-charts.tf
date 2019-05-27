@@ -22,6 +22,21 @@ resource "helm_release" "certificates-backend" {
   }
 }
 
+resource "helm_release" "certificates-keycloak" {
+  name = "certificates-keycloak"
+  chart = "../helm/tls-certs-keycloak"
+  namespace = "infra"
+
+  set {
+    name = "environment"
+    value = "${var.environment}"
+  }
+  set {
+    name = "domain"
+    value = "${var.domain}"
+  }
+}
+
 resource "helm_release" "infra" {
   name = "infra"
   chart = "../helm/infra"
