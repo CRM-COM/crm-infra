@@ -21,6 +21,13 @@ resource "kubernetes_secret" "keycloak_db_password" {
   }
 }
 
+resource "mysql_grant" "keycloak_user" {
+  database = "${mysql_database.keycloak.name}"
+  user = "${mysql_user.keycloak.user}"
+  host = "${mysql_user.keycloak.host}"
+  privileges = ["ALL"]
+}
+
 resource "mysql_database" "keycloak" {
   name = "keycloak"
   default_character_set = "utf8mb4"
