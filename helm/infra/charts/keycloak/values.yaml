@@ -74,7 +74,7 @@ keycloak:
   existingSecret: ""
 
   # The key in the existing secret that stores the password
-  existingSecretKey: passwordKey_Store()[.,pp;']]\'
+  existingSecretKey: passwordStore39392
 
   ## Allows the specification of additional environment variables for Keycloak
   extraEnv: |
