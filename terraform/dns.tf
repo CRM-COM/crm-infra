@@ -24,7 +24,7 @@ resource "google_dns_record_set" "api" {
 }
 
 resource "google_dns_record_set" "keycloak" {
-  name         = "api.${google_dns_managed_zone.main_zone.dns_name}"
+  name         = "keycloak.${google_dns_managed_zone.main_zone.dns_name}"
   type         = "A"
   ttl          = 300
   managed_zone = "${google_dns_managed_zone.main_zone.name}"
