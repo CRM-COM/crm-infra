@@ -26,7 +26,7 @@ resource "helm_release" "certificates-keycloak" {
   name = "certificates-keycloak"
   chart = "../helm/tls-certs-keycloak"
   namespace = "infra"
-  version = "0.1.1"
+  version = "0.1.2"
 
   set {
     name = "environment"
