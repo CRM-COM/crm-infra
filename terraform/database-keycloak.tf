@@ -12,7 +12,7 @@ resource "random_string" "keycloak_user_password" {
 resource "kubernetes_secret" "keycloak_db_password" {
   "metadata" {
     name = "database-keycloak"
-    namespace = "backend"
+    namespace = "infra"
 
   }
   data {
