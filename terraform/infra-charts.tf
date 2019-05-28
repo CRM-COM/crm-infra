@@ -11,6 +11,7 @@ resource "helm_release" "certificates-backend" {
   name = "certificates-backend"
   chart = "../helm/tls-certs-backend"
   namespace = "backend"
+  version = "0.1.1"
 
   set {
     name = "environment"
