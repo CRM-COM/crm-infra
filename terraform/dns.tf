@@ -16,7 +16,7 @@ resource "google_compute_global_address" "swagger" {
 }
 
 resource "google_dns_record_set" "api" {
-  name         = "api.${google_dns_managed_zone.main_zone.dns_name}"
+  name         = "dev.${google_dns_managed_zone.main_zone.dns_name}"
   type         = "A"
   ttl          = 6000
   managed_zone = "${google_dns_managed_zone.main_zone.name}"
