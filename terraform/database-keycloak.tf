@@ -30,8 +30,8 @@ resource "mysql_grant" "keycloak_user" {
 
 resource "mysql_database" "keycloak" {
   name = "keycloak"
-  default_character_set = "utf8mb4"
-  default_collation = "utf8mb4_general_ci"
+  default_character_set = "utf8"
+  default_collation = "utf8_general_ci"
 
   depends_on = ["google_sql_user.admin_mysql_user"]
 }
