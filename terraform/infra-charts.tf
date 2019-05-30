@@ -43,7 +43,7 @@ resource "helm_release" "infra" {
   name = "infra"
   chart = "../helm/infra"
   namespace = "infra"
-  version = "0.1.1"
+  version = "0.1.2"
 
   set {
     name = "environment"
