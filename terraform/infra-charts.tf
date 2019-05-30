@@ -44,6 +44,7 @@ resource "helm_release" "infra" {
   chart = "../helm/infra"
   namespace = "infra"
   version = "0.1.2"
+  force_update = true
 
   set {
     name = "environment"
