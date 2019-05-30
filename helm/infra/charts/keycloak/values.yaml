@@ -187,7 +187,7 @@ keycloak:
 
     ## ServiceType
     ## ref: https://kubernetes.io/docs/user-guide/services/#publishing-services---service-types
-    type: ClusterIP
+    type: NodePort
 
     ## Optional static port assignment for service type NodePort.
     # nodePort: 30000
