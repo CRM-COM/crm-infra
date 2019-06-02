@@ -61,6 +61,7 @@ resource "helm_release" "sealed-secrets" {
   repository = "${data.helm_repository.stable.name}"
   version = "1.0.1"
   namespace = "kube-system"
+  home = "/tmp/helm-tf"
 
   depends_on = [
     "kubernetes_cluster_role_binding.tiller-binding"
