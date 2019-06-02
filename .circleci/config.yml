@@ -16,6 +16,7 @@ jobs:
           command: |
             export HELM_HOME=/tmp/helm-tf
             helm init --client-only
+            helm repo add incubator https://kubernetes-charts-incubator.storage.googleapis.com/
       - run:
           name: Terraform Plan
           command: |
