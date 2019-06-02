@@ -45,7 +45,7 @@ provider "helm" {
   install_tiller = true
   service_account = "${kubernetes_service_account.tiller-sa.metadata.0.name}"
   max_history = 5
-  home = "/circleci/helm-tf"
+  home = "/helm-tf"
 
   kubernetes {
     host                   = "https://${google_container_cluster.main.endpoint}"
