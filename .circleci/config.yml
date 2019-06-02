@@ -16,6 +16,10 @@ jobs:
           command: |
             export HELM_HOME=/tmp/helm-tf
             helm init --client-only
+      - persist_to_workspace:
+          root: .
+          paths:
+            - tmp
       - run:
           name: Terraform Plan
           command: |
@@ -30,7 +34,7 @@ jobs:
           - terraform
           - keys
           - helm
-
+          - tmp
   tf-apply:
     working_directory: /circleci
     docker:
