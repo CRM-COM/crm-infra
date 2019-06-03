@@ -23,7 +23,7 @@ jobs:
 
             terraform get .
             terraform init -backend-config=../environments/$ENVIRONMENT/env.tfvars
-            terraform plan -refresh=true -out=out.tfplan
+            terraform plan -var helm_home=/circleci/helm-tf -refresh=true -out=out.tfplan
       - persist_to_workspace:
           root: .
           paths:

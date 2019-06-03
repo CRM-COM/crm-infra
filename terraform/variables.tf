@@ -52,3 +52,8 @@ variable "domain" {
   type = "string"
   default = "crmcloudapi.com"
 }
+
+variable "helm_home" {
+  type = "string"
+  default = "/circleci/helm-tf"
+}
