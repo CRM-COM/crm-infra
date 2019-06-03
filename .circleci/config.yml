@@ -24,6 +24,9 @@ jobs:
             terraform get .
             terraform init -backend-config=../environments/$ENVIRONMENT/env.tfvars
             terraform plan -var helm_home=/circleci/helm-tf -refresh=true -out=out.tfplan
+
+            cd ../environments/$ENVIRONMENT
+            helm upgrade --install --dry-run external-secrets ./secrets
       - persist_to_workspace:
           root: .
           paths:
@@ -44,6 +47,9 @@ jobs:
             echo ${TERRAFORM_ACCOUNT} | base64 -d > keys/terraform-${ENVIRONMENT}.json
             cd terraform
             terraform apply out.tfplan
+
+            cd ../environments/$ENVIRONMENT
+            helm upgrade --install external-secrets ./secrets
 
 #  helm-dryrun:
 #    working_directory: /circleci
