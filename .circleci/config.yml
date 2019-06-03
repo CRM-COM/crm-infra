@@ -106,26 +106,26 @@ workflows:
             branches:
               only: master
 
-#  helm-workflow-dev:
-#    jobs:
-#      - helm-dryrun:
-#          context: dev-crm
-#          filters:
-#            branches:
-#              only:
-#                - master
-#      - helm-approve:
-#          context: dev-crm
-#          type: approval
-#          requires:
-#            - helm-dryrun
-#          filters:
-#            branches:
-#              only: master
-#      - helm-apply:
-#          context: dev-crm
-#          requires:
-#            - helm-approve
-#          filters:
-#            branches:
-#              only: master
+  helm-workflow-dev:
+    jobs:
+      - helm-dryrun:
+          context: dev-crm
+          filters:
+            branches:
+              only:
+                - master
+      - helm-approve:
+          context: dev-crm
+          type: approval
+          requires:
+            - helm-dryrun
+          filters:
+            branches:
+              only: master
+      - helm-apply:
+          context: dev-crm
+          requires:
+            - helm-approve
+          filters:
+            branches:
+              only: master
