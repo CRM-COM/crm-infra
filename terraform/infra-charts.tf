@@ -42,7 +42,7 @@ resource "helm_release" "certificates-keycloak" {
 resource "helm_release" "certificates-dashboard" {
   name = "certificates-dashboard"
   chart = "../helm/tls-certs-dashboard"
-  namespace = "infra"
+  namespace = "web"
   version = "0.1.0"
 
   set {
