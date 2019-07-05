@@ -24,7 +24,7 @@ resource "helm_release" "certificates-backend" {
 }
 
 resource "helm_release" "certificates-swagger" {
-  name = "certificates-backend"
+  name = "certificates-swagger"
   chart = "../helm/tls-certs-swagger"
   namespace = "backend"
   version = "0.1.0"
