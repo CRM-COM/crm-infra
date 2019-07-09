@@ -65,7 +65,7 @@ resource "google_container_node_pool" "main_pool" {
   cluster = "${google_container_cluster.main.name}"
   zone   = "${var.zone}"
 
-  node_count = 2
+  node_count = 3
 //  autoscaling {
 //    max_node_count = "${var.max_nodes}"
 //    min_node_count = "${var.min_nodes}"
