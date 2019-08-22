@@ -19,6 +19,10 @@ resource "google_compute_global_address" "swagger" {
   name     = "swagger-static-ip"
 }
 
+resource "google_compute_global_address" "spectacle" {
+  name     = "spectacle-static-ip"
+}
+
 resource "google_dns_record_set" "api" {
   name         = "dev.${google_dns_managed_zone.main_zone.dns_name}"
   type         = "A"
